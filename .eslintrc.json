@@ -4,22 +4,18 @@
     "es6": true,
     "jest": true
   },
-  "extends": ["eslint:recommended", "plugin:import/recommended"],
+  "extends": ["eslint:recommended", "plugin:import/recommended", "prettier"],
   "globals": {
     "cy": "readonly"
   },
-  "overrides": [
-    {
-      "files": ["**/*.svelte"],
-      "processor": "svelte3/svelte3"
-    }
-  ],
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 2019,
     "sourceType": "module"
   },
-  "plugins": ["svelte3"],
+  "plugins": ["prettier", "svelte3"],
   "rules": {
-    "no-console": "off"
+    "no-console": "off",
+    "prettier/prettier": "error"
   }
 }
