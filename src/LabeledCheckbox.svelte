@@ -4,10 +4,6 @@
   export let checked = false;
 </script>
 
-<style>
-
-</style>
-
 <label class={className}>
   <input type="checkbox" bind:checked />
   {label}

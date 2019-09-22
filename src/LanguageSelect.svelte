@@ -1,25 +1,30 @@
 <script>
   import {onMount} from 'svelte';
-
   import {getSupportedLanguages, setLanguage} from 'web-translate';
 
   export let disabled = false;
-  export let languageCode;
   export let onChange = () => {};
 
+  let languageCode;
   let languages = {};
   let languageNames = [];
 
   onMount(async () => {
     languages = await getSupportedLanguages();
     languageNames = Object.keys(languages);
-    console.log('languageNames =', languageNames);
-    changeLanguage(languageCode);
+    const lc = sessionStorage.getItem('language-code');
+    console.log('LanguageSelect onMount: lc =', lc);
+    languageCode = lc || 'en';
+    setLanguage(languageCode);
   });
 
   async function changeLanguage(code) {
-    await setLanguage(code);
-    languageCode = code;
+    console.log('LanguageSelect changeLanguage: code =', code);
+    console.log('LanguageSelect changeLanguage: languageCode =', languageCode);
+    if (code !== languageCode) {
+      sessionStorage.setItem('language-code', code);
+      window.location.reload();
+    }
   }
 
   function handleChange(event) {

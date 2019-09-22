@@ -10,7 +10,9 @@
   import LabeledSelect from './LabeledSelect.svelte';
   import LabeledTextArea from './LabeledTextArea.svelte';
   import LanguageSelect from './LanguageSelect.svelte';
-  import Spinner, {taskEnd, taskStart} from './Spinner.svelte';
+  import Spinner from './Spinner.svelte';
+  import {taskEnd, taskStart} from './spinner';
+  import {languageStore} from './stores';
 
   const colorList = [
     {label: i18n('red')},
@@ -38,11 +40,14 @@
   let favoriteFlavors = [];
   let favoriteSeason = '';
   let happy = true;
-  let languageCode = 'es';
   let name = '';
   let story = '';
 
-  onMount(taskStart);
+  onMount(() => {
+    // This demonstrates use of Spinner.
+    taskStart();
+    setTimeout(taskEnd, 2000);
+  });
 </script>
 
 <style>
@@ -61,10 +66,9 @@
 <div class="container">
   <Spinner />
 
-  <!-- Calls to i18n are not executed again after languageCode changes!  How can you force that? -->
-  <LanguageSelect bind:languageCode />
+  <LanguageSelect />
 
-  <LabeledChildren label="languageCode">{languageCode}</LabeledChildren>
+  <LabeledChildren label="languageCode">{$languageStore}</LabeledChildren>
 
   <LabeledInput label={i18n('NameX')} bind:value={name} />
 

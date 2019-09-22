@@ -1,36 +1,8 @@
-<script context="module">
-  let busy = true;
-  let busyCounter = 0;
-  let startTime;
- 
-  export function taskEnd() {
-    if (busyCounter > 0) busyCounter--;
-    if (busyCounter === 0) {
-      const timeDisplayed = Date.now() - startTime;
-      // Wait to hide spinner until it has been
-      // displayed for a minimum amount of time.
-      const waitTime = Math.max(0, MIN_TIME_TO_DISPLAY - timeDisplayed);
-      setTimeout(() => (busy = false), waitTime);
-    }
-  }
-
-  export function taskStart() {
-    const alreadyBusy = busyCounter > 0;
-    busyCounter++;
-    if (!alreadyBusy) {
-      // Wait a bit before showing spinner so
-      // it never appears for short duration tasks.
-      setTimeout(() => {
-        startTime = Date.now();
-        if (busyCounter > 0) busy = true;
-      }, 500);
-    }
-  }
-</script>
-
 <script>
+  import {busyStore} from './spinner';
+  import Icon from 'fa-svelte';
   import {onMount} from 'svelte';
-  import {faCircle} from '@fortawesome/free-solid-svg-icons/faCircle';
+  import {faCamera} from '@fortawesome/free-solid-svg-icons';
 
   const SIZE = 150;
   const HALF_SIZE = SIZE / 2;
@@ -40,23 +12,27 @@
 
   const DELTA_DEGREES = 5;
   const LARGE_ARC = 0;
-  const MIN_TIME_TO_DISPLAY = 1000;
   const RADIUS = HALF_SIZE - HALF_STROKE;
   const SWEEP = 0;
   const SWEEP_DEGREES = 60;
   const X_AXIS_ROTATION = 0;
 
+  let element;
   let startDegrees = 0;
   let token;
 
   onMount(async () => {
+    if (element) {
+      const size = element.style.getPropertyValue('--size');
+      console.log('size =', size);
+    }
+
     token = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(token);
   });
 
   function animate(/*timestamp*/) {
     startDegrees = (startDegrees - DELTA_DEGREES) % 360;
-    console.log('Spinner animate: startDegrees =', startDegrees);
     token = requestAnimationFrame(animate);
   }
 
@@ -79,6 +55,13 @@
 </script>
 
 <style>
+  .icon {
+    /*TODO: Make the icon larger. */
+    height: 100px;
+    width: 100px;
+    outline: solid red 1px;
+  }
+
   .progress {
     box-sizing: border-box;
     height: var(--size);
@@ -88,7 +71,6 @@
   }
 
   .spinner {
-    /* Must match SIZE above. */
     --size: 150px;
 
     display: flex;
@@ -117,8 +99,8 @@
   }
 </style>
 
-{#if busy}
-  <div class="spinner">
+{#if $busyStore}
+  <div bind:this={element} class="spinner">
     <svg class="progress" width={SIZE} height={SIZE}>
       <path
         fill="none"
@@ -126,6 +108,6 @@
         stroke-width={STROKE_WIDTH}
         d={getPathD(startDegrees)} />
     </svg>
-    <!--{faCircle}-->
+    <Icon class="icon" icon={faCamera} />
   </div>
 {/if}
