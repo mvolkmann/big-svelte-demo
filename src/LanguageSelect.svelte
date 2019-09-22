@@ -1,35 +1,31 @@
 <script>
-import {onMount} from 'svelte';
+  import {onMount} from 'svelte';
 
-import {
-  getSupportedLanguages,
-  setLanguage
-} from 'web-translate';
+  import {getSupportedLanguages, setLanguage} from 'web-translate';
 
-export let disabled = false;
-export let languageCode;
-export let onChange = () => {};
+  export let disabled = false;
+  export let languageCode;
+  export let onChange = () => {};
 
-let languages = {};
-let languageNames = [];
+  let languages = {};
+  let languageNames = [];
 
-onMount(async () => {
-  languages = await getSupportedLanguages();
-  languageNames = Object.keys(languages);
-  console.log('languageNames =', languageNames);
-  changeLanguage(languageCode);
-});
+  onMount(async () => {
+    languages = await getSupportedLanguages();
+    languageNames = Object.keys(languages);
+    console.log('languageNames =', languageNames);
+    changeLanguage(languageCode);
+  });
 
-async function changeLanguage(code) {
-  await setLanguage(code);
-  languageCode = code;
-}
+  async function changeLanguage(code) {
+    await setLanguage(code);
+    languageCode = code;
+  }
 
-function handleChange(event) {
-  changeLanguage(event.target.value);
-  if (onChange) onChange(event);
-}
-
+  function handleChange(event) {
+    changeLanguage(event.target.value);
+    if (onChange) onChange(event);
+  }
 </script>
 
 <style>
@@ -50,11 +46,7 @@ function handleChange(event) {
 
 {#if languageNames.length > 0}
   <div class="container">
-    <select
-      disabled={disabled}
-      on:change={handleChange}
-      value={languageCode}
-    >
+    <select {disabled} on:change={handleChange} value={languageCode}>
       {#each languageNames as name}
         <option value={languages[name]}>{name}</option>
       {/each}

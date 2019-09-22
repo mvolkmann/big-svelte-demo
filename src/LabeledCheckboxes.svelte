@@ -4,16 +4,16 @@
   export let className = '';
   export let label = '';
   export let list = [];
-  export let value = '';
+  export let selected = [];
 </script>
 
 <style>
-  .radio-label {
+  .checkbox-label {
     display: inline-block;
     margin-left: 0;
   }
 
-  .radio-label:not(:first-of-type) {
+  .checkbox-label:not(:first-of-type) {
     margin-left: 10px;
   }
 
@@ -25,11 +25,11 @@
 <LabeledChildren {className} {label}>
   <div class="row">
     {#each list as item}
-      <label class="radio-label">
+      <label class="checkbox-label">
         <input
-          type="radio"
+          type="checkbox"
           value={item.value || item.label}
-          bind:group={value} />
+          bind:group={selected} />
         {item.label}
       </label>
     {/each}
