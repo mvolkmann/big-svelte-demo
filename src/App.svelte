@@ -1,5 +1,7 @@
 <script>
+  import {onMount} from 'svelte';
   import {i18n} from 'web-translate';
+
   import LabeledCheckbox from './LabeledCheckbox.svelte';
   import LabeledCheckboxes from './LabeledCheckboxes.svelte';
   import LabeledChildren from './LabeledChildren.svelte';
@@ -8,6 +10,7 @@
   import LabeledSelect from './LabeledSelect.svelte';
   import LabeledTextArea from './LabeledTextArea.svelte';
   import LanguageSelect from './LanguageSelect.svelte';
+  import Spinner, {taskEnd, taskStart} from './Spinner.svelte';
 
   const colorList = [
     {label: i18n('red')},
@@ -38,6 +41,8 @@
   let languageCode = 'es';
   let name = '';
   let story = '';
+
+  onMount(taskStart);
 </script>
 
 <style>
@@ -54,12 +59,14 @@
 </style>
 
 <div class="container">
+  <Spinner />
+
   <!-- Calls to i18n are not executed again after languageCode changes!  How can you force that? -->
   <LanguageSelect bind:languageCode />
 
   <LabeledChildren label="languageCode">{languageCode}</LabeledChildren>
 
-  <LabeledInput label={i18n('Name')} bind:value={name} />
+  <LabeledInput label={i18n('NameX')} bind:value={name} />
 
   <LabeledCheckbox label={i18n('Happy?')} bind:checked={happy} />
 
@@ -82,10 +89,10 @@
   <LabeledTextArea label={i18n('Life Story')} bind:value={story} />
 
   {#if name}
-  <div>
-    {name} likes {favoriteColor}, {favoriteSeason}, and is {happy ? 'happy' : 'unhappy'}.
-  </div>
-  <div>{name}'s favorite flavors are {favoriteFlavors.join(' and ')}.</div>
-  <div>Story: {story}</div>
+    <div>
+      {name} likes {favoriteColor}, {favoriteSeason}, and is {happy ? 'happy' : 'unhappy'}.
+    </div>
+    <div>{name}'s favorite flavors are {favoriteFlavors.join(' and ')}.</div>
+    <div>Story: {story}</div>
   {/if}
 </div>
