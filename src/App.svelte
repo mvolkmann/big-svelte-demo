@@ -18,29 +18,27 @@
   let flavorList = [];
   let seasonList = [];
 
-  $: {
-    colorList = [
-      {label: $i18n('red')},
-      {label: $i18n('orange')},
-      {label: $i18n('yellow')},
-      {label: $i18n('green')},
-      {label: $i18n('blue')},
-      {label: $i18n('purple')}
-    ];
+  colorList = [
+    {label: $i18n('red')},
+    {label: $i18n('orange')},
+    {label: $i18n('yellow')},
+    {label: $i18n('green')},
+    {label: $i18n('blue')},
+    {label: $i18n('purple')}
+  ];
 
-    flavorList = [
-      {label: $i18n('Vanilla')},
-      {label: $i18n('Chocolate')},
-      {label: $i18n('Strawberry')}
-    ];
+  flavorList = [
+    {label: $i18n('Vanilla')},
+    {label: $i18n('Chocolate')},
+    {label: $i18n('Strawberry')}
+  ];
 
-    seasonList = [
-      {label: $i18n('Spring')},
-      {label: $i18n('Summer')},
-      {label: $i18n('Fall')},
-      {label: $i18n('Winter')}
-    ];
-  }
+  seasonList = [
+    {label: $i18n('Spring')},
+    {label: $i18n('Summer')},
+    {label: $i18n('Fall')},
+    {label: $i18n('Winter')}
+  ];
 
   let favoriteColor = '';
   let favoriteFlavors = [];
