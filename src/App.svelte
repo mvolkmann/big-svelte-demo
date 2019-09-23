@@ -1,6 +1,5 @@
 <script>
   import {onMount} from 'svelte';
-  import {i18n as originalI18n} from 'web-translate';
 
   import Dialog from './Dialog.svelte';
   import LabeledCheckbox from './LabeledCheckbox.svelte';
@@ -13,36 +12,33 @@
   import LanguageSelect from './LanguageSelect.svelte';
   import Spinner from './Spinner.svelte';
   import {taskEnd, taskStart} from './spinner';
-  import {languageStore} from './stores';
+  import {i18n} from './stores';
 
-  let i18n = originalI18n;
   let colorList = [];
   let flavorList = [];
   let seasonList = [];
 
   $: {
-    i18n = $languageStore ? originalI18n.bind(null) : originalI18n;
-
     colorList = [
-      {label: i18n('red')},
-      {label: i18n('orange')},
-      {label: i18n('yellow')},
-      {label: i18n('green')},
-      {label: i18n('blue')},
-      {label: i18n('purple')}
+      {label: $i18n('red')},
+      {label: $i18n('orange')},
+      {label: $i18n('yellow')},
+      {label: $i18n('green')},
+      {label: $i18n('blue')},
+      {label: $i18n('purple')}
     ];
 
     flavorList = [
-      {label: i18n('Vanilla')},
-      {label: i18n('Chocolate')},
-      {label: i18n('Strawberry')}
+      {label: $i18n('Vanilla')},
+      {label: $i18n('Chocolate')},
+      {label: $i18n('Strawberry')}
     ];
 
     seasonList = [
-      {label: i18n('Spring')},
-      {label: i18n('Summer')},
-      {label: i18n('Fall')},
-      {label: i18n('Winter')}
+      {label: $i18n('Spring')},
+      {label: $i18n('Summer')},
+      {label: $i18n('Fall')},
+      {label: $i18n('Winter')}
     ];
   }
 
@@ -85,27 +81,27 @@
 
   <!-- <LabeledChildren label="languageCode">{$languageStore}</LabeledChildren> -->
 
-  <LabeledInput label={i18n('Name')} bind:value={name} />
+  <LabeledInput label={$i18n('Name')} bind:value={name} />
 
-  <LabeledCheckbox label={i18n('Happy?')} bind:checked={happy} />
+  <LabeledCheckbox label={$i18n('Happy?')} bind:checked={happy} />
 
   <LabeledCheckboxes
-    label={i18n('Favorite Flavors')}
+    label={$i18n('Favorite Flavors')}
     list={flavorList}
     bind:selected={favoriteFlavors} />
 
   <LabeledRadioButtons
     className="lrb"
-    label={i18n('Favorite Season')}
+    label={$i18n('Favorite Season')}
     list={seasonList}
     bind:value={favoriteSeason} />
 
   <LabeledSelect
-    label={i18n('Favorite Color')}
+    label={$i18n('Favorite Color')}
     list={colorList}
     bind:value={favoriteColor} />
 
-  <LabeledTextArea label={i18n('Life Story')} bind:value={story} />
+  <LabeledTextArea label={$i18n('Life Story')} bind:value={story} />
 
   {#if name}
     <div>

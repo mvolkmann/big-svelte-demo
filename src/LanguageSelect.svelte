@@ -1,13 +1,13 @@
 <script>
   import {onMount} from 'svelte';
-  import {getSupportedLanguages, setLanguage} from 'web-translate';
+  import {getSupportedLanguages, i18n as originalI18n, setLanguage} from 'web-translate';
 
-  import {languageStore} from './stores';
+  import {i18n} from './stores';
 
   export let disabled = false;
   export let onChange = () => {};
 
-  //let languageCode;
+  let languageCode;
   let languages = {};
   let languageNames = [];
 
@@ -17,11 +17,10 @@
   });
 
   async function handleChange(event) {
-    const code = event.target.value;
-    console.log('LanguageSelect.svelte handleChange: code =', code);
+    languageCode = event.target.value;
     try {
-      await setLanguage(code);
-      languageStore.set(code);
+      await setLanguage(languageCode);
+      i18n.set(originalI18n.bind(null));
       if (onChange) onChange(event);
     } catch (e) {
       console.error('LanguageSelect handleChange: e =', e);
@@ -47,7 +46,7 @@
 
 {#if languageNames.length > 0}
   <div class="container">
-    <select {disabled} on:change={handleChange} value={$languageStore}>
+    <select {disabled} on:change={handleChange} value={languageCode}>
       {#each languageNames as name}
         <option value={languages[name]}>{name}</option>
       {/each}
