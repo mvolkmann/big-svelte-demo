@@ -2,6 +2,7 @@
   import {onMount} from 'svelte';
   import {i18n} from 'web-translate';
 
+  import Dialog from './Dialog.svelte';
   import LabeledCheckbox from './LabeledCheckbox.svelte';
   import LabeledCheckboxes from './LabeledCheckboxes.svelte';
   import LabeledChildren from './LabeledChildren.svelte';
@@ -13,6 +14,13 @@
   import Spinner from './Spinner.svelte';
   import {taskEnd, taskStart} from './spinner';
   import {languageStore} from './stores';
+
+  function trans(languageCode, key) {
+    console.log('App trans: languageCode =', languageCode);
+    const value = i18n(key);
+    console.log('App trans: value =', value);
+    return value;
+  }
 
   const colorList = [
     {label: i18n('red')},
@@ -41,6 +49,7 @@
   let favoriteSeason = '';
   let happy = true;
   let name = '';
+  let openDialog = false;
   let story = '';
 
   onMount(() => {
@@ -48,6 +57,10 @@
     taskStart();
     setTimeout(taskEnd, 2000);
   });
+
+  function toggleDialog() {
+    openDialog = !openDialog;
+  }
 </script>
 
 <style>
@@ -64,13 +77,13 @@
 </style>
 
 <div class="container">
-  <Spinner />
+  <!--Spinner /-->
 
   <LanguageSelect />
 
   <LabeledChildren label="languageCode">{$languageStore}</LabeledChildren>
 
-  <LabeledInput label={i18n('NameX')} bind:value={name} />
+  <LabeledInput label={trans($languageStore, 'Name')} bind:value={name} />
 
   <LabeledCheckbox label={i18n('Happy?')} bind:checked={happy} />
 
@@ -99,4 +112,10 @@
     <div>{name}'s favorite flavors are {favoriteFlavors.join(' and ')}.</div>
     <div>Story: {story}</div>
   {/if}
+
+  <button on:click={toggleDialog}>Toggle Dialog</button>
+
+  <Dialog title="Test Dialog" open={openDialog}>
+    <div>Can you see this?</div>
+  </Dialog>
 </div>

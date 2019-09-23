@@ -23,6 +23,6 @@
 </style>
 
 <div class={'container ' + className}>
-  <label>{label}</label>
+  <label class="title">{label}</label>
   <slot />
 </div>

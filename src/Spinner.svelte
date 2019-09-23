@@ -59,7 +59,6 @@
     /*TODO: Make the icon larger. */
     height: 100px;
     width: 100px;
-    outline: solid red 1px;
   }
 
   .progress {
