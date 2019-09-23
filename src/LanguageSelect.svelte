@@ -1,8 +1,12 @@
 <script>
-  import {onMount} from 'svelte';
-  import {getSupportedLanguages, i18n as originalI18n, setLanguage} from 'web-translate';
+  import { onMount } from 'svelte';
+  import {
+    getSupportedLanguages,
+    i18n as originalI18n,
+    setLanguage
+  } from 'web-translate';
 
-  import {i18n} from './stores';
+  import { i18n } from './stores';
 
   export let disabled = false;
   export let onChange = () => {};

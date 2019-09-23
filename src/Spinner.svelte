@@ -1,8 +1,8 @@
 <script>
-  import {busyStore} from './spinner';
+  import { busyStore } from './spinner';
   import Icon from 'fa-svelte';
-  import {onMount} from 'svelte';
-  import {faCamera} from '@fortawesome/free-solid-svg-icons';
+  import { onMount } from 'svelte';
+  import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
   const SIZE = 150;
   const HALF_SIZE = SIZE / 2;

@@ -1,5 +1,5 @@
 <script>
-  import {onMount} from 'svelte';
+  import { onMount } from 'svelte';
 
   import Dialog from './Dialog.svelte';
   import LabeledCheckbox from './LabeledCheckbox.svelte';
@@ -11,34 +11,36 @@
   import LabeledTextArea from './LabeledTextArea.svelte';
   import LanguageSelect from './LanguageSelect.svelte';
   import Spinner from './Spinner.svelte';
-  import {taskEnd, taskStart} from './spinner';
-  import {i18n} from './stores';
+  import { taskEnd, taskStart } from './spinner';
+  import { i18n } from './stores';
 
   let colorList = [];
   let flavorList = [];
   let seasonList = [];
 
-  colorList = [
-    {label: $i18n('red')},
-    {label: $i18n('orange')},
-    {label: $i18n('yellow')},
-    {label: $i18n('green')},
-    {label: $i18n('blue')},
-    {label: $i18n('purple')}
-  ];
+  $: {
+    colorList = [
+      { label: $i18n('red') },
+      { label: $i18n('orange') },
+      { label: $i18n('yellow') },
+      { label: $i18n('green') },
+      { label: $i18n('blue') },
+      { label: $i18n('purple') }
+    ];
 
-  flavorList = [
-    {label: $i18n('Vanilla')},
-    {label: $i18n('Chocolate')},
-    {label: $i18n('Strawberry')}
-  ];
+    flavorList = [
+      { label: $i18n('Vanilla') },
+      { label: $i18n('Chocolate') },
+      { label: $i18n('Strawberry') }
+    ];
 
-  seasonList = [
-    {label: $i18n('Spring')},
-    {label: $i18n('Summer')},
-    {label: $i18n('Fall')},
-    {label: $i18n('Winter')}
-  ];
+    seasonList = [
+      { label: $i18n('Spring') },
+      { label: $i18n('Summer') },
+      { label: $i18n('Fall') },
+      { label: $i18n('Winter') }
+    ];
+  }
 
   let favoriteColor = '';
   let favoriteFlavors = [];
