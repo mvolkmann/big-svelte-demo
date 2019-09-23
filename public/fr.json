@@ -1,7 +1,22 @@
 {
   "Chocolate": "Chocolat",
-  "Ice Cream Flavor": "La Saveur De Crème Glacée",
+  "Fall": "L'automne",
+  "Favorite Color": "Couleur Préférée",
+  "Favorite Flavors": "Saveurs Préférées",
+  "Favorite Season": "Saison Préférée",
+  "Happy?": "Heureux?",
+  "Life Story": "Histoire De La Vie",
   "Name": "Nom",
+  "Spring": "Printemps",
   "Strawberry": "Fraise",
-  "Vanilla": "La vanille"
+  "Summer": "L'été",
+  "Vanilla": "La vanille",
+  "Winter": "L'hiver",
+  "blue": "bleu",
+  "foo": "bar",
+  "green": "vert",
+  "orange": "orange",
+  "purple": "violet",
+  "red": "rouge",
+  "yellow": "jaune"
 }

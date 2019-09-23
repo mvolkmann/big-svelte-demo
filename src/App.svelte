@@ -1,6 +1,6 @@
 <script>
   import {onMount} from 'svelte';
-  import {i18n} from 'web-translate';
+  import {i18n as originalI18n} from 'web-translate';
 
   import Dialog from './Dialog.svelte';
   import LabeledCheckbox from './LabeledCheckbox.svelte';
@@ -15,34 +15,36 @@
   import {taskEnd, taskStart} from './spinner';
   import {languageStore} from './stores';
 
-  function trans(languageCode, key) {
-    console.log('App trans: languageCode =', languageCode);
-    const value = i18n(key);
-    console.log('App trans: value =', value);
-    return value;
+  let i18n = originalI18n;
+  let colorList = [];
+  let flavorList = [];
+  let seasonList = [];
+
+  $: {
+    i18n = $languageStore ? originalI18n.bind(null) : originalI18n;
+
+    colorList = [
+      {label: i18n('red')},
+      {label: i18n('orange')},
+      {label: i18n('yellow')},
+      {label: i18n('green')},
+      {label: i18n('blue')},
+      {label: i18n('purple')}
+    ];
+
+    flavorList = [
+      {label: i18n('Vanilla')},
+      {label: i18n('Chocolate')},
+      {label: i18n('Strawberry')}
+    ];
+
+    seasonList = [
+      {label: i18n('Spring')},
+      {label: i18n('Summer')},
+      {label: i18n('Fall')},
+      {label: i18n('Winter')}
+    ];
   }
-
-  const colorList = [
-    {label: i18n('red')},
-    {label: i18n('orange')},
-    {label: i18n('yellow')},
-    {label: i18n('green')},
-    {label: i18n('blue')},
-    {label: i18n('purple')}
-  ];
-
-  const flavorList = [
-    {label: i18n('Vanilla')},
-    {label: i18n('Chocolate')},
-    {label: i18n('Strawberry')}
-  ];
-
-  const seasonList = [
-    {label: i18n('Spring')},
-    {label: i18n('Summer')},
-    {label: i18n('Fall')},
-    {label: i18n('Winter')}
-  ];
 
   let favoriteColor = '';
   let favoriteFlavors = [];
@@ -81,9 +83,9 @@
 
   <LanguageSelect />
 
-  <LabeledChildren label="languageCode">{$languageStore}</LabeledChildren>
+  <!-- <LabeledChildren label="languageCode">{$languageStore}</LabeledChildren> -->
 
-  <LabeledInput label={trans($languageStore, 'Name')} bind:value={name} />
+  <LabeledInput label={i18n('Name')} bind:value={name} />
 
   <LabeledCheckbox label={i18n('Happy?')} bind:checked={happy} />
 
