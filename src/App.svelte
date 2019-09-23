@@ -70,7 +70,7 @@
   */
 </style>
 
-<div class="container">
+<form class="container" on:submit|preventDefault>
   <!--Spinner /-->
 
   <LanguageSelect />
@@ -108,10 +108,10 @@
   {/if}
 
   <div>
-    <button on:click={() => showDialog = true}>Toggle Dialog</button>
+    <button on:click={() => (showDialog = true)}>Toggle Dialog</button>
   </div>
 
   <Dialog title="Test Dialog" bind:open={showDialog}>
     <div>This is my dialog content.</div>
   </Dialog>
-</div>
+</form>

@@ -87,7 +87,9 @@
   <dialog bind:this={dialog} class={'dialog ' + className}>
     <header>
       {title}
-      <button class="close-btn" on:click={() => open = false}>&#x2716;</button>
+      <button class="close-btn" on:click={() => (open = false)}>
+        &#x2716;
+      </button>
     </header>
     <section class="body">
       <slot />
