@@ -47,7 +47,7 @@
   let favoriteSeason = '';
   let happy = true;
   let name = '';
-  let openDialog = false;
+  let showDialog = false;
   let story = '';
 
   onMount(() => {
@@ -55,10 +55,6 @@
     taskStart();
     setTimeout(taskEnd, 2000);
   });
-
-  function toggleDialog() {
-    openDialog = !openDialog;
-  }
 </script>
 
 <style>
@@ -111,9 +107,11 @@
     <div>Story: {story}</div>
   {/if}
 
-  <button on:click={toggleDialog}>Toggle Dialog</button>
+  <div>
+    <button on:click={() => showDialog = true}>Toggle Dialog</button>
+  </div>
 
-  <Dialog title="Test Dialog" open={openDialog}>
-    <div>Can you see this?</div>
+  <Dialog title="Test Dialog" bind:open={showDialog}>
+    <div>This is my dialog content.</div>
   </Dialog>
 </div>

@@ -1,46 +1,28 @@
 <script>
   /*global dialogPolyfill: false */
-
   import { onMount } from 'svelte';
 
-  export let canClose = true;
   export let className = '';
-  export let icon = null;
-  export let onClose = () => {};
   export let open = false;
-  export let style = {};
   export let title = '';
 
-  $: {
-    console.log({ dialog, open });
-    if (dialog) {
-      if (open) {
-        dialog.showModal();
-      } else {
-        dialog.close();
-      }
-    }
-  }
-
-  const cn = 'dialog' + (className ? ' ' + className : '');
   let dialog;
 
   onMount(() => {
     // Register the dialog with the polyfill which is
     // required by browsers that lack native support.
     if (typeof dialogPolyfill !== 'undefined') {
-      dialogPolyfill.registerDialog(dialogRef.current);
+      dialogPolyfill.registerDialog(dialog);
     }
   });
-
-  function close() {
-    console.log('Dialog.svelte close: dialog =', dialog);
-    if (onClose) onClose();
-    dialog.close();
-  }
 </script>
 
 <style>
+  :root {
+    --header-color: white;
+    --padding: 1rem;
+  }
+
   dialog {
     /* These properties center the dialog in the browser window. */
     display: table;
@@ -53,10 +35,6 @@
     border: none;
     box-shadow: 0 0 10px darkgray;
     padding: 0;
-  }
-
-  .body {
-    padding: 0.5rem;
   }
 
   button {
@@ -74,19 +52,10 @@
   .close-btn {
     background-color: transparent;
     border: none;
-    color: darkgray;
+    color: var(--header-color);
     font-size: 24px;
-    margin-right: 0.5rem;
     outline: none;
     padding: 0;
-  }
-
-  .close-btn:hover {
-    background-color: transparent;
-  }
-
-  .error-dialog .title {
-    color: red;
   }
 
   header {
@@ -94,45 +63,34 @@
     justify-content: space-between;
     align-items: center;
 
+    background-color: cornflowerblue;
     box-sizing: border-box;
+    color: var(--header-color);
+    font-size: 24px;
+    font-weight: bold;
+    padding: var(--padding);
     width: 100%;
   }
 
   section {
-    margin: 0;
-  }
-
-  .title {
-    display: flex;
-    align-items: center;
-    background-color: cornflowerblue;
-    color: white;
-    font-size: 14px;
-    margin-right: 1rem;
-    padding: 0.5rem;
+    padding: var(--padding);
   }
 
   ::backdrop, /* for native <dialog> */
-dialog + .backdrop /* for dialog-polyfill */ {
+  dialog + .backdrop /* for dialog-polyfill */ {
     /* a transparent shade of gray */
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.3);
   }
 </style>
 
-<dialog bind:this={dialog} class={cn} {style}>
-  {#if icon || title}
+{#if open}
+  <dialog bind:this={dialog} class={'dialog ' + className}>
     <header>
-      <div class="title">
-        {#if icon}{icon}{/if}
-        {title}
-      </div>
-      {#if canClose}
-        <button class="close-btn" on:click={close}>&#x2716;</button>
-      {/if}
+      {title}
+      <button class="close-btn" on:click={() => open = false}>&#x2716;</button>
     </header>
-  {/if}
-  <section class="body">
-    <div>open = {open}</div>
-    <slot />
-  </section>
-</dialog>
+    <section class="body">
+      <slot />
+    </section>
+  </dialog>
+{/if}
