@@ -1,11 +1,13 @@
 <script>
   import Crud from './Crud.svelte';
+  import {deleteResource, getJson, postJson, putJson} from './fetch-util';
+  import {handleError} from './utilities';
 
   let lastId = 0;
-  const dogs = {};
 
   const formFields = [
     {
+      focus: true,
       label: 'Breed',
       placeholder: 'breed',
       propertyName: 'breed',
@@ -28,35 +30,42 @@
       : dog1.name.localeCompare(dog2.name);
   }
 
-  function createItem(dog) {
-    console.log('Dogs.svelte createItem: dog =', dog);
+  async function createItem(dog) {
     dog.id = ++lastId;
-    dogs[dog.id] = dog;
-  }
-
-  function deleteItems(ids) {
-    for (const id of ids) {
-      delete dogs[id];
+    try {
+      await postJson('', dog);
+    } catch (e) {
+      handleError('Dogs createItem', e);
     }
   }
 
-  function itemToString(dog) {
-    console.log('Dogs.svelte itemToString: dog =', dog);
-    return dog.name + ' is a ' + dog.breed;
+  async function deleteItems(ids) {
+    try {
+      const promises = ids.map(id => deleteResource(id));
+      await Promise.all(promises);
+    } catch (e) {
+      handleError('Dogs deleteItem', e);
+    }
   }
 
-  function retrieveItems() {
-    return dogs;
+  const itemToString = dog => dog.name + ' is a ' + dog.breed;
+
+  async function retrieveItems() {
+    try {
+      return await getJson('');
+    } catch (e) {
+      handleError('Dogs retrieveItems', e);
+    }
   }
 
-  function updateItem(dog) {
-    dogs[dog.id] = dog;
+  async function updateItem(dog) {
+    try {
+      await putJson(dog.id, dog);
+    } catch (e) {
+      handleError('Dogs updateItem', e);
+    }
   }
 </script>
-
-<style>
-
-</style>
 
 <div class="container">
   <Crud

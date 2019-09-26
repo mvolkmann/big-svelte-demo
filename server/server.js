@@ -1,8 +1,10 @@
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const express = require('express');
 
 const app = express();
-app.use(bodyParser());
+app.use(cors());
+app.use(bodyParser.json());
 
 let lastId = 0;
 const dogs = {};
@@ -19,10 +21,14 @@ app.post('/', (req, res) => {
   const { breed, name } = req.body;
   const dog = { id: ++lastId, breed, name };
   dogs[dog.id] = dog;
+  console.log('server.js post: dogs =', dogs);
   sendJson(res, dog);
 });
 
-app.get('/', (req, res) => sendJson(res, dogs));
+app.get('/', (req, res) => {
+  console.log('server.js get: dogs =', dogs);
+  sendJson(res, dogs);
+});
 
 app.get('/:id', (req, res) => {
   const { id } = req.params;
@@ -36,6 +42,7 @@ app.put('/:id', (req, res) => {
   if (mustExist(res, id)) {
     const dog = { breed, id, name };
     dogs[id] = dog;
+    console.log('server.js put: dogs =', dogs);
     sendJson(res, dog);
   }
 });
@@ -44,6 +51,7 @@ app.delete('/:id', (req, res) => {
   const { id } = req.params;
   if (mustExist(res, id)) {
     delete dogs[id];
+    console.log('server.js delete: dogs =', dogs);
     res.send();
   }
 });

@@ -21,23 +21,28 @@
 
   let mode = 'retrieve'; // other values are 'create' and 'update'
   let selectedItems = [];
-  let itemMap = retrieveItems();
+  let itemMap = {};
+
+  getItems();
 
   $: items = Object.values(itemMap).sort(compareItems);
   $: isUpdate = mode === 'update';
-  $: item = isUpdate ? selectedItems[0] : {};
-  $: console.log({isUpdate, item, mode});
+  $: item = isUpdate ? selectedItems[0] || {} : {};
 
   const cancel = () => (mode = 'retrieve');
 
-  function deleteSelected() {
+  async function deleteSelected() {
     const ids = selectedItems.map(item => item.id);
-    deleteItems(ids);
+    await deleteItems(ids);
     for (const id of ids) {
       delete itemMap[id];
     }
     itemMap = itemMap;
     selectedItems = [];
+  }
+
+  async function getItems() {
+    itemMap = await retrieveItems();
   }
 
   function onSelect(event) {
@@ -48,11 +53,11 @@
     selectedItems = newSelectedItems;
   }
 
-  function save(item) {
+  async function save(item) {
     const fn = isUpdate ? updateItem : createItem;
-    fn(item);
+    await fn(item);
     selectedItems = [];
-    itemMap = retrieveItems();
+    itemMap = await retrieveItems();
     mode = 'retrieve';
   }
 </script>
@@ -64,6 +69,10 @@
     font-size: 24px;
     margin-right: 10px;
     padding: 0;
+  }
+
+  button:disabled {
+    opacity: 0.4;
   }
 </style>
 

@@ -25,13 +25,15 @@
 
 <style>
   button {
-    border: none;
+    border: solid lightgray 1px;
+    border-radius: 4px;
     font-size: 18px;
     margin-right: 5px;
+    padding: 4px;
   }
 
   button:disabled {
-    color: lightgray;
+    opacity: 0.3;
   }
 
   .buttons {
