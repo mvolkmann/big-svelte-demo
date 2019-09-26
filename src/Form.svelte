@@ -60,7 +60,7 @@
   {#each fields as field, index (field.propertyName)}
     <div class="row">
       <label>{field.label}</label>
-      <FormControl {field} first={index === 0} {item} {setItem} />
+      <FormControl {field} {item} {setItem} />
     </div>
   {/each}
   <div class="buttons">

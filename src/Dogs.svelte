@@ -7,7 +7,7 @@
 
   const formFields = [
     {
-      focus: true,
+      autofocus: true,
       label: 'Breed',
       placeholder: 'breed',
       propertyName: 'breed',
@@ -20,6 +20,12 @@
       propertyName: 'name',
       required: true,
       type: 'string'
+    },
+    {
+      label: 'Size',
+      propertyName: 'size',
+      type: 'radio',
+      options: ['Small', 'Medium', 'Large']
     }
   ];
 
@@ -48,7 +54,8 @@
     }
   }
 
-  const itemToString = dog => dog.name + ' is a ' + dog.breed;
+  const itemToString = dog =>
+    dog.name + ' is a ' + dog.size + ' ' + dog.breed;
 
   async function retrieveItems() {
     try {
