@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
 
   import Dialog from './Dialog.svelte';
+  import Dogs from './Dogs.svelte';
   import LabeledCheckbox from './LabeledCheckbox.svelte';
   import LabeledCheckboxes from './LabeledCheckboxes.svelte';
   import LabeledChildren from './LabeledChildren.svelte';
@@ -74,6 +75,9 @@
   <!--Spinner /-->
 
   <LanguageSelect />
+
+  <h2>Dogs</h2>
+  <Dogs />
 
   <!-- <LabeledChildren label="languageCode">{$languageStore}</LabeledChildren> -->
 

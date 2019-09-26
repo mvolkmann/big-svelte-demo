@@ -68,11 +68,6 @@ button:focus {
 
 /* Start of custom styles. */
 
-/*TODO: Why does this have no effect on LabeledRadioButtons? */
-input[type='radio'] {
-  outline: solid blue 1px;
-}
-
 .lrb .title {
   font-size: 24px;
 }
