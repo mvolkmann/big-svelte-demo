@@ -1,3 +1,6 @@
+// You no longer need this since you
+// learned how to use the prop-types npm package.
+
 export function assertArray(componentName, propName, propValue) {
   if (!isArray(propValue)) {
     throw new Error(

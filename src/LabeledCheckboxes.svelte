@@ -1,5 +1,7 @@
 <script>
-  import {isArray, isString, propTypes} from './prop-types';
+  import PropTypes from 'prop-types/prop-types';
+  const {arrayOf, checkPropTypes, shape, string} = PropTypes;
+
   import LabeledChildren from './LabeledChildren.svelte';
 
   export let className = '';
@@ -7,11 +9,16 @@
   export let list = [];
   export let selected = [];
 
-  propTypes(
-    'LabeledCheckboxes',
-    {className, label, list, selected},
-    [isString, isString, isArray, isArray]
-  );
+  const propTypes = {
+    className: string,
+    label: string.isRequired,
+    list: arrayOf(shape({
+      label: string.isRequired,
+      value: string
+    })).isRequired,
+    selected: arrayOf(string).isRequired
+  }
+  checkPropTypes(propTypes, $$props, 'prop', 'LabeledCheckboxes');
 </script>
 
 <style>
