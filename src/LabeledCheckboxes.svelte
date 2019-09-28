@@ -1,10 +1,17 @@
 <script>
+  import {isArray, isString, propTypes} from './prop-types';
   import LabeledChildren from './LabeledChildren.svelte';
 
   export let className = '';
   export let label = '';
   export let list = [];
   export let selected = [];
+
+  propTypes(
+    'LabeledCheckboxes',
+    {className, label, list, selected},
+    [isString, isString, isArray, isArray]
+  );
 </script>
 
 <style>
