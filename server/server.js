@@ -1,10 +1,9 @@
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const express = require('express');
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 let lastId = 0;
 const dogs = {};
