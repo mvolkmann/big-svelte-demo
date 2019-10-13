@@ -20,7 +20,7 @@
     save(item);
   }
 
-  const setItem = newItem => item = newItem;
+  const setItem = newItem => (item = newItem);
 </script>
 
 <style>

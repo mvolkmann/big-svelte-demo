@@ -79,14 +79,12 @@
 <div class="crud">
   {#if mode === 'retrieve'}
     {#if items.length}
-    <select multiple on:change={onSelect}>
-      {#each items as item (item.id)}
-        <option key={item.id} value={item.id}>
-          {itemToString(item)}
-        </option>
-        <div>no dogs</div>
-      {/each}
-    </select>
+      <select multiple on:change={onSelect}>
+        {#each items as item (item.id)}
+          <option key={item.id} value={item.id}>{itemToString(item)}</option>
+          <div>no dogs</div>
+        {/each}
+      </select>
     {/if}
     <div class="buttons">
       {#if createItem}

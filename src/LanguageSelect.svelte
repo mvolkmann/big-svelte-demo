@@ -24,7 +24,8 @@
     languageCode = event.target.value;
     try {
       await setLanguage(languageCode);
-      i18n.set(originalI18n.bind(null));
+      // Doing this is enough to trigger interpolations that use $i18n to re-render!
+      i18n.set(originalI18n);
       if (onChange) onChange(event);
     } catch (e) {
       console.error('LanguageSelect handleChange: e =', e);

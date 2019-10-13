@@ -35,15 +35,16 @@
 </script>
 
 <style>
-  input, select {
+  input,
+  select {
     border: solid lightgray 1px;
     border-radius: 4px;
     font-size: 18px;
     padding: 4px;
   }
 
-  input[type=checkbox],
-  input[type=radio] {
+  input[type='checkbox'],
+  input[type='radio'] {
     height: 16px;
     margin-bottom: 0;
   }
@@ -60,7 +61,7 @@
   .radio {
     display: inline-block;
   }
-      
+
   label {
     display: inline-block;
     font-weight: normal;
@@ -94,7 +95,7 @@
         name={propertyName}
         on:change={e => onChange(e, propertyName)}
         type="radio"
-        use:takeFocus 
+        use:takeFocus
         value={option} />
       <label>{option}</label>
     {/each}

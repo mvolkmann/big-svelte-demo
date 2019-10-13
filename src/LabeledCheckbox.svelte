@@ -1,6 +1,6 @@
 <script>
   import PropTypes from 'prop-types/prop-types';
-  const {bool, checkPropTypes, string} = PropTypes;
+  const { bool, checkPropTypes, string } = PropTypes;
 
   export let className = '';
   export let label = '';
@@ -10,7 +10,7 @@
     className: string,
     label: string.isRequired,
     checked: bool
-  }
+  };
   // checkPropTypes is a no-op when NODE_ENV = "production".
   checkPropTypes(propTypes, $$props, 'prop', 'LabeledCheckboxes');
 </script>

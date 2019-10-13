@@ -1,7 +1,7 @@
 <script>
   import Crud from './Crud.svelte';
-  import {deleteResource, getJson, postJson, putJson} from './fetch-util';
-  import {handleError} from './utilities';
+  import { deleteResource, getJson, postJson, putJson } from './fetch-util';
+  import { handleError } from './utilities';
 
   let lastId = 0;
 
@@ -54,8 +54,7 @@
     }
   }
 
-  const itemToString = dog =>
-    dog.name + ' is a ' + dog.size + ' ' + dog.breed;
+  const itemToString = dog => dog.name + ' is a ' + dog.size + ' ' + dog.breed;
 
   async function retrieveItems() {
     try {
