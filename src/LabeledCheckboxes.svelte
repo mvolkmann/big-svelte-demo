@@ -1,13 +1,19 @@
 <script>
+  /* Example usage:
+  <LabeledCheckboxes
+    label="Favorite Flavors"
+    list={flavorList}
+    bind:selected={favoriteFlavors} />
+  */
   import PropTypes from 'prop-types/prop-types';
   const { arrayOf, checkPropTypes, shape, string } = PropTypes;
 
   import LabeledChildren from './LabeledChildren.svelte';
 
   export let className = '';
-  export let label = '';
-  export let list = [];
-  export let selected = [];
+  export let label;
+  export let list;
+  export let selected;
 
   const propTypes = {
     className: string,

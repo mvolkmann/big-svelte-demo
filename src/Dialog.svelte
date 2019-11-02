@@ -1,60 +1,71 @@
 <script>
-  /*global dialogPolyfill: false */
-  import { onMount } from 'svelte';
+  /* Example usage:
+  <script>
+    let myDialog = null;
+  </scriptx> // the "x" gets around a Svelte comment parsing bug
 
+  <div>
+    <button on:click={() => myDialog.showModal()}>Open Dialog</button>
+  </div>
+
+  <Dialog title="Test Dialog" bind:dialog={myDialog}>
+    <div>This is my dialog content.</div>
+  </Dialog>
+  */
+  import dialogPolyfill from 'dialog-polyfill';
+  import { createEventDispatcher, onMount } from 'svelte';
+
+  // Boolean that determines whether a close "X" should be displayed.
+  export let canClose = true;
+
+  // Optional CSS class name to be added to the dialog element.
   export let className = '';
-  export let open = false;
-  export let title = '';
 
-  let dialog;
+  // Parent components can use bind:dialog={myDialog} to get a
+  // reference so they can call show(), showModal(), and close().
+  export let dialog;
 
-  onMount(() => {
-    // Register the dialog with the polyfill which is
-    // required by browsers that lack native support.
-    if (typeof dialogPolyfill !== 'undefined') {
-      dialogPolyfill.registerDialog(dialog);
-    }
-  });
+  // An optional icon to render in the header before the title.
+  export let icon = undefined;
+
+  // Title text to display in the dialog header.
+  export let title;
+
+  const dispatch = createEventDispatcher();
+
+  $: classNames = 'dialog' + (className ? ' ' + className : '');
+
+  onMount(() => dialogPolyfill.registerDialog(dialog));
+
+  function close() {
+    dispatch('close');
+    dialog.close();
+  }
 </script>
 
 <style>
-  :root {
-    --header-color: white;
-    --padding: 1rem;
-  }
-
-  dialog {
-    /* These properties center the dialog in the browser window. */
-    display: table;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    right: 50%;
-    transform: translate(-50%, -50%);
-
-    border: none;
-    box-shadow: 0 0 10px darkgray;
-    padding: 0;
-  }
-
-  button {
-    margin: 0 5px;
-  }
-
-  .buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    margin-top: 0.5rem;
+  .body {
+    padding: 10px;
   }
 
   .close-btn {
     background-color: transparent;
     border: none;
-    color: var(--header-color);
+    color: white;
     font-size: 24px;
     outline: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  dialog {
+    /* These properties center the dialog in the browser window. */
+    position: fixed;
+    top: 50%;
+    transform: translate(0, -50%);
+
+    border: none;
+    box-shadow: 0 0 10px darkgray;
     padding: 0;
   }
 
@@ -65,34 +76,39 @@
 
     background-color: cornflowerblue;
     box-sizing: border-box;
-    color: var(--header-color);
-    font-size: 24px;
+    color: white;
     font-weight: bold;
-    padding: var(--padding);
+    padding: 10px;
     width: 100%;
   }
 
-  section {
-    padding: var(--padding);
+  main {
+    padding: 10px;
   }
 
-  ::backdrop, /* for native <dialog> */
-  dialog + .backdrop /* for dialog-polyfill */ {
+  .title {
+    flex-grow: 1;
+    font-size: 18px;
+    margin-right: 10px;
+  }
+
+  dialog::backdrop,
+  dialog + .backdrop {
     /* a transparent shade of gray */
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.4);
   }
 </style>
 
-{#if open}
-  <dialog bind:this={dialog} class={'dialog ' + className}>
-    <header>
-      {title}
-      <button class="close-btn" on:click={() => (open = false)}>
-        &#x2716;
-      </button>
-    </header>
-    <section class="body">
-      <slot />
-    </section>
-  </dialog>
-{/if}
+<!-- See README.md for documentation on using this. -->
+<dialog bind:this={dialog} class={classNames}>
+  <header>
+    {#if icon}{icon}{/if}
+    <div class="title">{title}</div>
+    {#if canClose}
+      <button class="close-btn" on:click={close}>&#x2716;</button>
+    {/if}
+  </header>
+  <main>
+    <slot />
+  </main>
+</dialog>

@@ -15,6 +15,7 @@
   import { taskEnd, taskStart } from './spinner';
   import { i18n } from './stores';
 
+  let myDialog = null;
   let colorList = [];
   let flavorList = [];
   let seasonList = [];
@@ -48,7 +49,6 @@
   let favoriteSeason = '';
   let happy = true;
   let name = '';
-  let showDialog = false;
   let story = '';
 
   onMount(() => {
@@ -63,12 +63,6 @@
     display: flex;
     flex-direction: column;
   }
-
-  /*
-  :global(.lrb) {
-    outline: solid red 1px;
-  }
-  */
 </style>
 
 <form class="container" on:submit|preventDefault>
@@ -112,10 +106,10 @@
   {/if}
 
   <div>
-    <button on:click={() => (showDialog = true)}>Toggle Dialog</button>
+    <button on:click={() => myDialog.showModal()}>Open Dialog</button>
   </div>
 
-  <Dialog title="Test Dialog" bind:open={showDialog}>
+  <Dialog title="Test Dialog" bind:dialog={myDialog}>
     <div>This is my dialog content.</div>
   </Dialog>
 </form>

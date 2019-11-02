@@ -1,10 +1,16 @@
 <script>
+  /* Example usage:
+  <LabeledRadioButtons
+    label="Favorite Season"
+    list={seasonList}
+    bind:value={favoriteSeason} />
+  */
   import LabeledChildren from './LabeledChildren.svelte';
 
   export let className = '';
-  export let label = '';
-  export let list = [];
-  export let value = '';
+  export let label;
+  export let list;
+  export let value;
 </script>
 
 <style>
