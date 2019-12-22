@@ -17,8 +17,8 @@ function mustExist(res, id) {
 const sendJson = (res, obj) => res.send(JSON.stringify(obj));
 
 app.post('/', (req, res) => {
-  const { breed, name } = req.body;
-  const dog = { id: ++lastId, breed, name };
+  const { breed, name, size } = req.body;
+  const dog = { id: ++lastId, breed, name, size };
   dogs[dog.id] = dog;
   console.log('server.js post: dogs =', dogs);
   sendJson(res, dog);
@@ -37,9 +37,9 @@ app.get('/:id', (req, res) => {
 
 app.put('/:id', (req, res) => {
   const { id } = req.params;
-  const { breed, name } = req.body;
+  const { breed, name, size } = req.body;
   if (mustExist(res, id)) {
-    const dog = { breed, id, name };
+    const dog = { breed, id, name, size };
     dogs[id] = dog;
     console.log('server.js put: dogs =', dogs);
     sendJson(res, dog);

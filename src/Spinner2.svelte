@@ -1,5 +1,5 @@
 <script>
-  import {onMount} from 'svelte';
+  import { onMount } from 'svelte';
 
   export let size = 100;
 
